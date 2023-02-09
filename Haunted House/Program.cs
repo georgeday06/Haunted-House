@@ -28,6 +28,7 @@ while (true)
     if (neighbouringRooms[2] >= 0) { validCommands.Add("South"); }
     if (neighbouringRooms[3] >= 0) { validCommands.Add("West"); }
 
+    
     foreach (var direction in validCommands)
     {
         Console.WriteLine(direction);
@@ -42,7 +43,7 @@ while (true)
     else if (command == "East") { currentRoom = neighbouringRooms[1]; }
     else if (command == "South") { currentRoom = neighbouringRooms[2]; }
     else if (command == "West") { currentRoom = neighbouringRooms[3]; }
-
+    player.SetCurrentRoom(currentRoom);
 }
 
 class Room
