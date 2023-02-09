@@ -12,10 +12,11 @@ Random R = new Random();
 house[R.Next(1,6)].AddKey();
 house[R.Next(1, 6)].AddKey();
 
+bool Finished = false;
 int currentRoom = 0;
 List<string> validCommands = new List<string>();
 
-while (true)
+while (Finished == false)
 {
     string command = "";
     validCommands.Clear();
@@ -114,11 +115,15 @@ class Player
             Console.WriteLine("You picked up a key!");
         }
     }
-    public void unlockDoor()
+    public bool unlockDoor()
     {
         if (currentRoom == 6 && keys == 2)
         {
-
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
