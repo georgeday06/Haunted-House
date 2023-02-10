@@ -1,15 +1,15 @@
 ﻿Room[] house = new Room[7];
-house[0] = new Room("Hallway", new int[] { -1, 1, 3, -1 }, "Room0", false);
-house[1] = new Room("Study", new int[] { -1, 2,-1, 0}, "Room1", false);
-house[2] = new Room("Library", new int[] { -1, -1, -1, 1 }, "Room2", false);
-house[3] = new Room("Kitchen", new int[] { 0, 4, 5, -1 }, "Room3", false);
-house[4] = new Room("Cellar", new int[] { -1, -1, 6, 3 }, "Room4", false);
-house[5] = new Room("Courtyard", new int[] { 3, 6, -1, -1 }, "Room5", false);
-house[6] = new Room("Garden", new int[] { 4, -1, -1, 5 }, "Room6", false);
+house[0] = new Room("Hallway", new int[] { -1, 1, 3, -1 }, "Room0", false, -1);
+house[1] = new Room("Study", new int[] { -1, 2,-1, 0}, "Room1", false, -1);
+house[2] = new Room("Library", new int[] { -1, -1, -1, 1 }, "Room2", false, -1);
+house[3] = new Room("Kitchen", new int[] { 0, 4, 5, -1 }, "Room3", false, -1);
+house[4] = new Room("Cellar", new int[] { -1, -1, 6, 3 }, "Room4", false, -1);
+house[5] = new Room("Courtyard", new int[] { 3, 6, -1, -1 }, "Room5", false, -1);
+house[6] = new Room("Garden", new int[] { 4, -1, -1, 5 }, "Room6", false, -1);
 Player player = new Player(0,0);
 
 Random R = new Random();
-house[R.Next(1,6)].AddKey();
+house[R.Next(1, 6)].AddKey();
 house[R.Next(1, 6)].AddKey();
 
 bool Finished = false;
@@ -45,6 +45,23 @@ while (Finished == false)
     else if (command == "South") { currentRoom = neighbouringRooms[2]; }
     else if (command == "West") { currentRoom = neighbouringRooms[3]; }
     player.SetCurrentRoom(currentRoom);
+
+    if (player.GetCurrentRoom() == 6)
+    {
+        player.unlockDoor();
+    }
+
+    
+    if (random == 1)
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("The Ghost has killed you. Try again");
+        Finished = true;
+    }
+    else
+    {
+        Console.WriteLine("You escaped the ghost. Be more careful.");
+    }
 }
 
 class Room
@@ -53,13 +70,15 @@ class Room
     private int[] connections;
     private string Description;
     private bool containsKey;
+    private int ghostLocation;
 
-    public Room(string n,int[] c, string d, bool ck)
+    public Room(string n,int[] c, string d, bool ck, int gL)
     {
         Name = n;
         connections = c;
         Description = d;
         containsKey = ck;
+        ghostLocation = gL;
     }
 
     public string getName()
@@ -87,6 +106,12 @@ class Room
     {
         containsKey = false;
         getContainsKey();
+    }
+    public int generateGhostLocation()
+    {
+        Random r = new Random();
+        int random = r.Next(1, 6);
+        return random;
     }
 }
 
@@ -125,5 +150,9 @@ class Player
         {
             return false;
         }
+    }
+    public void isGhostInRoom()
+    {
+        int x = Room.
     }
 }
